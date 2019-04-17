@@ -4,15 +4,16 @@
 
 Gem.pre_install do |installer|
   spec = installer.spec
+  package = installer.instance_variable_get("@package")
   manifest = nil
 
-  spec.files.each do |file|
+  package.contents.each do |file|
     manifest = file if file =~ /^(manifest\.*.*?)/i
     break if manifest
   end
 
   if manifest
-    puts "Manifest file is: #{manifest}."
+    puts "Manifest file is '#{manifest}'"
     # TODO:
     #   1 - Read file contents of manifest, ignore markup.
     #   2 - Compare package contents against manifest.
